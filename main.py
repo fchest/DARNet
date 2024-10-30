@@ -74,7 +74,7 @@ def train_model(settings, args, train_loader, valid_loader, test_loader, subject
             # Backward and optimize
             optimizer.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=4.0)
+            # torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=4.0)
             optimizer.step()
             with torch.no_grad():
                 train_loss_sum += loss.item() * batch_size
@@ -158,14 +158,10 @@ def train_model(settings, args, train_loader, valid_loader, test_loader, subject
     return test_loss, test_acc
 
 
-def main(name="S1", time_len=1, dataset="DTU"):
-    setup_seed(42)
-    print(name)
+def main(name="S1", time_len=0.1, dataset="KUL"):
     args = DotMap()
     args.name = name
     args.max_epoch = 100
-    args.random_seed = 1234
-    args.both_feature = False
     train_loader, valid_loader, test_loader = getData(name, time_len, dataset)
     config['Data_shape'] = train_loader.dataset.data.shape
     print('Data shape:', config['Data_shape'])
@@ -188,9 +184,4 @@ if __name__ == "__main__":
 
     result_logger.addHandler(file_handler)
 
-    dataset = 'DTU'
-    config['time_len'] = 1
-    for i in range(1, 19):
-        name = 'S' + str(i)
-        time_len = config['time_len']
-        main(name=name, time_len=time_len, dataset=dataset)
+    main()
