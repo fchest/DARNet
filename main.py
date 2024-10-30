@@ -158,7 +158,7 @@ def train_model(settings, args, train_loader, valid_loader, test_loader, subject
     return test_loss, test_acc
 
 
-def main(name="S1", time_len=0.1, dataset="KUL"):
+def main(name="S1", time_len=0.1, dataset="DTU"):
     args = DotMap()
     args.name = name
     args.max_epoch = 100
